@@ -44,7 +44,7 @@ print(data.dtypes)
 
 
 #za LOGISTICKU REGRESIJU
-# X5 je age, a y4 je CPI
+# X5 je age, a y4 je housing
 X5 = data.loc[:,['age']].copy()
 y5 = data.loc[:,['housing']].copy()
 
@@ -101,3 +101,33 @@ confusion_matrix = confusion_matrix(y5_test, y5_pred)
 print(confusion_matrix)
 
 print(classification_report(y5_test, y5_pred))
+
+#Logistic regression for CPI and loan
+X6 = data.loc[:,['cons.price.idx']].copy()
+y6 = data.loc[:,['loan']].copy()
+
+# lab_enc = preprocessing.LabelEncoder()
+# age = lab_enc.fit_transform(X5)
+
+#Dijelimo podatke na trenirane i testne, omjer je 70:30
+X6_train, X6_test, y6_train, y6_test = train_test_split(X6, y6, test_size=0.30, random_state=0)
+
+print("Logistic regression for age and housing")
+model.fit(X6_train, y6_train)
+
+print("Score for logistic regression model is: ", model.score(X6_test, y6_test))
+
+#Logistic regression for CFI and housing
+X7 = data.loc[:,['cons.conf.idx']].copy()
+y7 = data.loc[:,['housing']].copy()
+
+# lab_enc = preprocessing.LabelEncoder()
+# age = lab_enc.fit_transform(X5)
+
+#Dijelimo podatke na trenirane i testne, omjer je 70:30
+X7_train, X7_test, y7_train, y7_test = train_test_split(X7, y7, test_size=0.30, random_state=0)
+
+print("Logistic regression for CFI and housing")
+model.fit(X7_train, y7_train)
+
+print("Score for logistic regression model is: ", model.score(X7_test, y7_test))
