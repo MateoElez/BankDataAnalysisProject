@@ -85,10 +85,10 @@ model = LogisticRegression()
 
 #Logistic regression for age and housing
 
-print("Logistic regression for age and housing")
+print("Logistic regression for subscribed and everything else")
 print(model.fit(X5_train, y5_train))
 
-print("Score for logistic regression model is: ", model.score(X5_test, y5_test))
+print("Score for logistic regression model for subscribing is: ", model.score(X5_test, y5_test))
 
 y5_pred = model.predict(X5_test)
 
@@ -109,7 +109,7 @@ X6_train, X6_test, y6_train, y6_test = train_test_split(X6, y6, test_size=0.30, 
 print("Logistic regression for age and housing")
 model.fit(X6_train, y6_train)
 
-print("Score for logistic regression model is: ", model.score(X6_test, y6_test))
+print("Score for logistic regression model for CPI and loan is: ", model.score(X6_test, y6_test))
 
 
 #Logistic regression for CFI and housing

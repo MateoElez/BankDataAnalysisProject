@@ -339,7 +339,7 @@ cat('Prosječni CPI za ljude koji imaju privatni kredit ', mean(people_with_loan
 cat('Prosječni CPI za ljude koji nemaaju privatni kredit ', mean(people_without_loan$cons.price.idx), '\n')
 
 ```
-Histogram za edukaciju i stambeni kredit:
+Histogram za CPI i stambeni kredit:
 ```{r}
 hist(people_with_loan$cons.price.idx,main='CPI for people with private loan', xlab='CPI', ylab='količina')
 hist(people_without_loan$cons.price.idx,main='CPI for people without private loan', xlab='CPI', ylab='količina')
@@ -351,3 +351,125 @@ boxplot(BankData$cons.price.idx~BankData$loan,
         main = 'Boxplot of CPI and private loan')
 ```
 U slučaju privatnog kredita, ni na histogramu, ni na box plotu ne vidimo neku razliku, pa možemo naoko reći da CPI nema veze s osobnim kreditom.
+
+Sada gledamo CCI i kredite:
+
+CCI i housing:
+
+```{r}
+cat('Prosječni CCI za ljude koji imaju privatni kredit ', mean(people_with_loan$cons.conf.idx), '\n')
+cat('Prosječni CCI za ljude koji nemaaju privatni kredit ', mean(people_without_loan$cons.conf.idx), '\n')
+```
+Scatter plot za CCI i housing
+```{r}
+boxplot(BankData$cons.conf.idx~BankData$housing,
+        main = 'Boxplot of CCI and hosuing loan')
+```
+Po danom box plotu ne možemo najbolje vidjeti razliku.. pa za sada nećemo donositi nikakve zaključke dok ne testiramo u pythonu.
+
+Nakon svih ovih testiranja, nismo primjetili neke velike sličnosti u varijablama. Probat ćemo sada kombinirati te varijable s varijablom subscribed koja govori je li se određena osoba pretplatila nakon obavljenog poziva.
+
+Inače, naš je dataset napravljen na temelju anketiranja čiji je cilj "natjerati" ispitanika da se "pretplati".
+
+Subscribed varijbla i CPI:
+
+Podijelit ćemo dataset na one koji su se prijavili i one koji nisu:
+```{r}
+subscribed = BankData[which(BankData$subscribed == 1),]
+not_subscribed = BankData[which(BankData$subscribed == 0),]
+```
+
+Sada promatramo prosječni CPI za one koji su se pretplatili, tj one koji nisu:
+```{r}
+cat('Prosječni CPI za ljude koji su se prijavili ', mean(subscribed$cons.price.idx), '\n')
+cat('Prosječni CPI za ljude koji se nisu prijavili ', mean(not_subscribed$cons.price.idx), '\n')
+```
+Nakon toga prikazat ćemo box plot:
+0 - not subscribed
+1- subscribed
+```{r}
+boxplot(BankData$cons.price.idx~BankData$subscribed,
+        main = 'Boxplot of CPI and subscribing')
+```
+Na box plotu se da primjetiti da je niži CPI kod ljudi koji su se na kraju pretplatili.
+
+Sada idemo vidjeti vrijedi li isto i za CCI, Consumer Confiedence Index
+
+Sada promatramo prosječni CCI za one koji su se pretplatili, tj one koji nisu:
+```{r}
+cat('Prosječni CCI za ljude koji su se prijavili ', mean(subscribed$cons.conf.idx), '\n')
+cat('Prosječni CCI za ljude koji se nisu prijavili ', mean(not_subscribed$cons.conf.idx), '\n')
+```
+Nakon toga prikazat ćemo box plot:
+0 - not subscribed
+1- subscribed
+```{r}
+boxplot(BankData$cons.conf.idx~BankData$subscribed,
+        main = 'Boxplot of CCI and subscribing')
+```
+Ovdje pak vidimo da je kod onih koji su se pretplatili veći CCI, ali također i puno veća odstupanja..
+
+Sada možemo gledati prosjeke ljudi koji su se pretplatili ovisno o edukaciji, godinama...
+
+Gledamo prosjeke pretplaćenih ovisno o godinama:
+
+```{r}
+cat('Prosjek pretplaćenih mladih ljudi ', mean(young$subscribed), '\n')
+cat('Prosjek pretplaćenih srednje starih ljudi ', mean(middle$subscribed), '\n')
+cat('Prosjek pretplaćenih starijih ljudi ', mean(middle$subscribed), '\n')
+```
+
+```{r}
+x <- c(42, 14, 14)
+labels <- c("younger", "middle aged", "older")
+
+pie(x, labels, main = "Pie chart of subscribed people")
+```
+Ovdje je očito da je najviše pretplaćeno mladih ljudi.
+
+Gledamo prosjeke pretplaćenih ovisno o edukaciji:
+
+```{r}
+cat('Prosječno pretplaćenih ljudi sa završenom osnovnom školom ', mean(primary_school$subscribed), '\n')
+cat('Prosječno pretplaćenih ljudi sa završenom srednjom školom ', mean(high_school$subscribed), '\n')
+cat('Prosječno pretplaćenih ljudi sa završenim fakultetom ', mean(university$subscribed), '\n')
+cat('Prosječno pretplaćenih nepismenih ljudi ', mean(illiterate$subscribed), '\n')
+```
+
+```{r}
+x <- c(11, 13, 16, 19)
+labels <- c("Primary school finshed", "High school finished", "Uni finished", "Illiterate")
+
+pie(x, labels, main = "Pie chart of subscribed people")
+```
+
+Ovdje možemo vidjeti zanimljivost da je najviše pretplaćenih ljudi koji su nepismeni..
+
+Sada gledamo prosjek pretplaćenih ovisno o bračnom statusu:
+
+```{r}
+cat('Prosjek preplaćenih ljudi koji su oženjeni ', mean(married_people$subscribed), '\n')
+cat('Prosjek preplaćenih ljudi koji su neoženjeni ili rastavljeni ', mean(divorced_and_single_people$subscribed), '\n')
+```
+
+
+
+```{r}
+x <- c(12.43, 14.95)
+labels <- c("Married", "Not married")
+
+pie(x, labels, main = "Pie chart of subscribed people")
+```
+Možemo vidjeti da je više neoženjenih ili rastavljenih pretplaćeno.
+
+Sada smo napravili i analizu pretplaćenih i nepretplaćenih ljudi ovisno o godinama, edukaciji i ženidbenom statusu i vidjeli neke potencijalne zaključke, ali to ćemo detaljnije vidjeti u kodu.
+Vizualizacija služi samo za bolje razumijevanje podataka i njihovog prikaza.
+
+
+
+
+
+
+
+
+
