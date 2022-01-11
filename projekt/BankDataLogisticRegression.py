@@ -48,12 +48,8 @@ print(data.dtypes)
 X5 = data.loc[:,['age']].copy()
 y5 = data.loc[:,['housing']].copy()
 
-# lab_enc = preprocessing.LabelEncoder()
-# age = lab_enc.fit_transform(X5)
-
 #Dijelimo podatke na trenirane i testne, omjer je 70:30
 X5_train, X5_test, y5_train, y5_test = train_test_split(X5, y5, test_size=0.30, random_state=0)
-
 
 model = LogisticRegression()
 
@@ -106,28 +102,29 @@ print(classification_report(y5_test, y5_pred))
 X6 = data.loc[:,['cons.price.idx']].copy()
 y6 = data.loc[:,['loan']].copy()
 
-# lab_enc = preprocessing.LabelEncoder()
-# age = lab_enc.fit_transform(X5)
-
 #Dijelimo podatke na trenirane i testne, omjer je 70:30
 X6_train, X6_test, y6_train, y6_test = train_test_split(X6, y6, test_size=0.30, random_state=0)
+
 
 print("Logistic regression for age and housing")
 model.fit(X6_train, y6_train)
 
 print("Score for logistic regression model is: ", model.score(X6_test, y6_test))
 
+
 #Logistic regression for CFI and housing
 X7 = data.loc[:,['cons.conf.idx']].copy()
 y7 = data.loc[:,['housing']].copy()
 
-# lab_enc = preprocessing.LabelEncoder()
-# age = lab_enc.fit_transform(X5)
-
 #Dijelimo podatke na trenirane i testne, omjer je 70:30
 X7_train, X7_test, y7_train, y7_test = train_test_split(X7, y7, test_size=0.30, random_state=0)
+
+y7_pred = model.predict(X7_test)
 
 print("Logistic regression for CFI and housing")
 model.fit(X7_train, y7_train)
 
 print("Score for logistic regression model is: ", model.score(X7_test, y7_test))
+
+print("Classification report table:")
+print(classification_report(y7_test, y7_pred))
