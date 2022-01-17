@@ -36,12 +36,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random
 
 
 #Provodimo logističku regresiju
-classifier= LogisticRegression()  
+classifier= LogisticRegression()
+#treniranje modela
 classifier.fit(X_train, y_train)  
 
 #Predviđamo rezultat 
 y_pred= classifier.predict(X_test) 
 
+#Confussion matrix for model accuracy
 confusion_matrix = confusion_matrix(y_test, y_pred)
 print(confusion_matrix)
 print("Score for logistic regression model is: ", classifier.score(X_test, y_test))
@@ -59,6 +61,7 @@ data['housing'] = pd.Categorical(data.housing)
 import warnings
 warnings.filterwarnings('always')
 
+#logisticka regresija gdje su regresori age, marital i education, a output varijabla je stambeni kredit
 X = data.loc[:,['age', 'marital', 'education']].copy()
 y = data.loc[:,['housing']].copy()
 
@@ -90,6 +93,7 @@ data['loan'] = pd.Categorical(data.loan)
 import warnings
 warnings.filterwarnings('always')
 
+#logisticka regresija gdje su regresori age, marital i education, a output varijabla je privatni kredit
 X = data.loc[:,['age', 'marital', 'education']].copy()
 y = data.loc[:,['loan']].copy()
 
